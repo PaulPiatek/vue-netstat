@@ -1,14 +1,12 @@
 // for dev:
 // const Vue = require('vue/dist/vue.js');
 const Vue = require('vue/dist/vue.min.js');
-var netstat = require('node-netstat');
 var ping = require('net-ping');
 const Stat = require("./stat.js");
 var Multimap = require('multimap');
 const uuidv1 = require('uuid/v1');
 const tasklist = require('tasklist');
 var wstat = require('windows-netstat');
-console.log(wstat());
 var _ = require('lodash');
 
 var session = ping.createSession ({timeout:1000});
@@ -23,7 +21,7 @@ var v = new Vue({
       sortKey: 'pid',
       reverse: false,
       protocolFilter: 'all',
-      columns: ['pid', 'protocol', 'taskName', 'localPort', 'ip', 'port', 'state', 'ping']
+      columns: ['pid', 'protocol', 'taskName', 'localIp', 'localPort', 'ip', 'port', 'state', 'ping']
     },
     computed: {
         ordereredPIDs: function () {
@@ -59,26 +57,25 @@ var v = new Vue({
 
 async function getStats()
 {
-    netstat({
-        filter: {
-            //protocol: 'tcp'
-        }
-    }, function (data) {
+    let netstatData = wstat();
+
+    for (data of netstatData)
+    {
         let stat = new Stat();
         stat.setPid(data.pid);
         stat.setProtocol(data.protocol);
-        stat.setIp(data.remote.address);
-        stat.setPort(data.remote.port);
-        stat.setLocalPort(data.local.port);
+        stat.setIp(data.remoteIP);
+        stat.setPort(data.remotePort);
+        stat.setLocalIp(data.localIP);
+        stat.setLocalPort(data.localPort);
         stat.setState(data.state);
-        stat.fixUDP();
         stat.setUpdateTime(new Date().getTime());
         stat.setUid(uuidv1());
         if (v.stats.has(data.pid))   
         {
             let found = false;
             for (currentstat of v.stats.get(data.pid)){
-                if (currentstat.localPort === data.local.port && currentstat.ip === data.remote.address){
+                if (currentstat.localPort === data.localPort && currentstat.ip === data.remoteIP){
                     currentstat.setUpdateTime(new Date().getTime());
                     found = true;
                     break;
@@ -94,7 +91,7 @@ async function getStats()
             v.stats.set(data.pid, stat);
             v.pids.push(stat);
         }
-    });
+    }
 }
 
 
@@ -138,12 +135,10 @@ function pingIt() {
         }
     }
 }
+
 function setPingResult(ip, ms) {
     for (i in v.pids)  {
         if (v.pids[i].ip === ip){
-            //pid = v.pids[i];
-            //pid.ping = ms;
-            //v.pids.splice(i, 1, pid);
             v.pids[i].ping = ms;
             v.pids.splice(i, 1, v.pids[i]);
         }

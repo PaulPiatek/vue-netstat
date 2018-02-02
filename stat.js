@@ -18,6 +18,12 @@ class Stat{
     setProtocol(protocol) {
         this.protocol = protocol;
     }    
+    getLocalIp() {
+        return this.localIp;
+    }
+    setLocalIp(localIp) {
+        this.localIp = localIp;
+    }
     getLocalPort() {
         return this.localPort;
     }
@@ -64,14 +70,6 @@ class Stat{
     }
     setUpdateTime(updateTime) {
         this.updateTime = updateTime;
-    }
-
-    fixUDP()
-    {
-        if (this.protocol === 'udp' && this.ip === '*'){
-            this.port = null;
-            this.state = null;
-        }
     }
 
 }

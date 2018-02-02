@@ -5,11 +5,11 @@ It is build with Electron and Vue.
 ## Build
 
 ### Prerequisite
-[windows-buildtools](https://github.com/felixrieseberg/windows-build-tools)
+[windows-buildtools](https://github.com/felixrieseberg/windows-build-tools)  
 [node-gyp](https://github.com/nodejs/node-gyp)
 
-### Install needed modules
-node install
+### Install dependencies
+npm install
 
 ### Start it
 npm start

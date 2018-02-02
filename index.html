@@ -32,11 +32,11 @@
         <label class="btn btn-secondary" v-bind:class="{active: protocolFilter == 'all'}">
           <input type="radio" name="all" id="option1" value="all" v-model="protocolFilter" autocomplete="off"> All
         </label>
-        <label class="btn btn-secondary" v-bind:class="{active: protocolFilter == 'tcp'}">
-          <input type="radio" name="tcp" id="option2" value="tcp" v-model="protocolFilter" autocomplete="off"> TCP
+        <label class="btn btn-secondary" v-bind:class="{active: protocolFilter == 'TCP'}">
+          <input type="radio" name="TCP" id="option2" value="TCP" v-model="protocolFilter" autocomplete="off"> TCP
         </label>
-        <label class="btn btn-secondary" v-bind:class="{active: protocolFilter == 'udp'}">
-          <input type="radio" name="udp" id="option3" value="udp" v-model="protocolFilter" autocomplete="off"> UDP
+        <label class="btn btn-secondary" v-bind:class="{active: protocolFilter == 'UDP'}">
+          <input type="radio" name="UDP" id="option3" value="UDP" v-model="protocolFilter" autocomplete="off"> UDP
         </label>
       </div>    
       <table class="table table-striped table-bordered table-hover table-sm" >
@@ -54,10 +54,11 @@
             <td style="width: 5%">{{ stat.pid }}</td>
             <td style="width: 5%">{{ stat.protocol }}</td>
             <td style="width: 20%">{{ stat.taskName }}</td>
+            <td style="width: 15%">{{ stat.localIp }}</td>
             <td style="width: 10%">{{ stat.localPort }}</td>
-            <td style="width: 20%">{{ stat.ip }}</td>
+            <td style="width: 15%">{{ stat.ip }}</td>
             <td style="width: 10%">{{ stat.port }}</td>
-            <td style="width: 20%">{{ stat.state }}</td>
+            <td style="width: 10%">{{ stat.state }}</td>
             <td style="width: 10%">{{ stat.ping }}</td>
             <!--td>{{ getImageName(stat.pid) }}</td-->
           </tr>

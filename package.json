@@ -27,7 +27,6 @@
     "lodash": "^4.17.4",
     "multimap": "^1.0.2",
     "net-ping": "^1.2.1",
-    "node-netstat": "^1.4.2",
     "tasklist": "^3.1.0",
     "uuid": "^3.2.1",
     "vue": "^2.5.13",
