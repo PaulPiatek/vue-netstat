@@ -19,8 +19,8 @@
   "author": "Paul Piatek",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.8.1",
-    "electron-builder": "^19.56.2",
+    "electron": "^1.7.12",
+    "electron-builder": "^19.55.3",
     "electron-rebuild": "^1.7.3"
   },
   "dependencies": {
