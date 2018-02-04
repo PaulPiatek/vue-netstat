@@ -27,10 +27,9 @@
     "lodash": "^4.17.4",
     "multimap": "^1.0.2",
     "net-ping": "^1.2.1",
-    "tasklist": "^3.1.0",
     "uuid": "^3.2.1",
     "vue": "^2.5.13",
-    "windows-netstat": "file:../native-netstat/windows-netstat-1.0.0.tgz"
+    "windows-netstat": "^1.0.0"
   },
   "build": {
     "appId": "vue.netstat",

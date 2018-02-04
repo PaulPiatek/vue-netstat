@@ -5,7 +5,6 @@ var ping = require('net-ping');
 const Stat = require("./stat.js");
 var Multimap = require('multimap');
 const uuidv1 = require('uuid/v1');
-const tasklist = require('tasklist');
 var wstat = require('windows-netstat');
 var _ = require('lodash');
 
@@ -17,7 +16,6 @@ var v = new Vue({
       established: true,
       pids: [],
       stats: new Multimap(),
-      taskMap: new Map(),
       sortKey: 'pid',
       reverse: false,
       protocolFilter: 'all',
@@ -41,17 +39,7 @@ var v = new Vue({
         sortBy: function(sortKey) {
           this.reverse = (this.sortKey == sortKey) ? ! this.reverse : false;
           this.sortKey = sortKey;
-        },
-        getImageName(pid){
-            if (this.taskMap.get(pid)){
-                return this.taskMap.get(pid);
-            }
-            else{
-                fillTasklist();
-                return '';
-            }
         }
-
     }
   });
 
@@ -63,6 +51,7 @@ async function getStats()
     {
         let stat = new Stat();
         stat.setPid(data.pid);
+        stat.setTaskName(data.taskName);
         stat.setProtocol(data.protocol);
         stat.setIp(data.remoteIP);
         stat.setPort(data.remotePort);
@@ -109,7 +98,6 @@ async function cleanup() {
             }
             if (v.stats.get(key).length === 0) {
                 v.stats.delete(key);
-                v.taskMap.delete(key);
             }
         }
     });
@@ -145,45 +133,6 @@ function setPingResult(ip, ms) {
     }
 }
 
-function getTaskNames() {
-    for (pid of v.pids) {
-        if(pid.taskName === undefined)
-        {
-            if (v.taskMap.get(pid.pid)){
-                setTaskName(pid.pid, v.taskMap.get(pid.pid));
-            }
-            else{
-                fillTasklist();
-                return '';
-            }
-        }
-    }
-}
-function setTaskName(pid, taskName) {
-    for (i in v.pids)  {
-        if (v.pids[i].pid === pid){
-            v.pids[i].taskName = taskName;
-            v.pids.splice(i, 1, v.pids[i]);
-        }
-    }
-}
-
-
-updateTaskListScheduled = false;
-function fillTasklist(){
-    if (!updateTaskListScheduled){
-        updateTaskListScheduled = true;
-        tasklist().then(tasks => {
-            for (let task of tasks){
-                v.taskMap.delete(task.pid);
-                v.taskMap.set(task.pid, task.imageName);
-            }
-        }).then( () => {
-            updateTaskListScheduled = false;
-        });
-    }
-}
-
 async function mainLoop()
 {
     await getStats();
@@ -193,5 +142,4 @@ async function mainLoop()
 getStats();
 setInterval(mainLoop, 2000);
 setInterval(pingIt, 5000);
-setInterval(getTaskNames, 1000);
 
