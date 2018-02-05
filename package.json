@@ -34,8 +34,7 @@
   "build": {
     "appId": "vue.netstat",
     "win": {
-      "target": "7z",
-      "requestedExecutionLevel": "highestAvailable"
+      "target": "7z"
     }
   }
 }
