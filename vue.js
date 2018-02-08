@@ -19,6 +19,7 @@ var v = new Vue({
       sortKey: 'pid',
       reverse: false,
       protocolFilter: 'all',
+      taskFilter: '',
       columns: ['pid', 'protocol', 'taskName', 'localIp', 'localPort', 'ip', 'port', 'state', 'ping']
     },
     computed: {
@@ -27,7 +28,9 @@ var v = new Vue({
                 _.filter(this.pids, function(pid){
                     if (v.established && pid.state == 'ESTABLISHED' || !v.established){
                         if (v.protocolFilter == 'all' || v.protocolFilter === pid.protocol){
-                            return pid;
+                            if (v.taskFilter.length > 0 && pid.taskName.toLowerCase().indexOf(v.taskFilter.toLowerCase()) >= 0 || v.taskFilter.length === 0){
+                                return pid;
+                            }
                         }
                     }
                 }),
