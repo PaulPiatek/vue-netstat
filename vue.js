@@ -67,7 +67,7 @@ async function getStats()
         {
             let found = false;
             for (currentstat of v.stats.get(data.pid)){
-                if (currentstat.localPort === data.localPort && currentstat.ip === data.remoteIP){
+                if (currentstat.localPort === data.localPort && currentstat.ip === data.remoteIP && currentstat.port === data.remotePort){
                     currentstat.setUpdateTime(new Date().getTime());
                     found = true;
                     break;
