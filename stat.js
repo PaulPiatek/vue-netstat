@@ -72,6 +72,13 @@ class Stat{
         this.updateTime = updateTime;
     }
 
+    getPidStatus() {
+        return this.pidStatus;
+    }
+    setPidStatus(pidStatus) {
+        this.pidStatus = pidStatus;
+    }
+
 }
 
 module.exports = Stat;

@@ -63,12 +63,14 @@ async function getStats()
         stat.setState(data.state);
         stat.setUpdateTime(new Date().getTime());
         stat.setUid(uuidv1());
+        stat.setPidStatus('new');
         if (v.stats.has(data.pid))   
         {
             let found = false;
             for (currentstat of v.stats.get(data.pid)){
                 if (currentstat.localPort === data.localPort && currentstat.ip === data.remoteIP && currentstat.port === data.remotePort){
                     currentstat.setUpdateTime(new Date().getTime());
+                    currentstat.setPidStatus('existing');
                     found = true;
                     break;
                 }
@@ -90,6 +92,14 @@ async function getStats()
 async function cleanup() {
     v.stats.forEachEntry(function (entry, key) {
         for (let stat of entry) {
+            if (new Date().getTime() - stat.updateTime > 1000) {
+                for (i in v.pids)  {
+                    if (v.pids[i].uid === stat.uid){
+                        v.pids[i].setPidStatus('killed');
+                        break;
+                    }
+                }
+            }
             if (new Date().getTime() - stat.updateTime > 2000) {
                 for (i in v.pids)  {
                     if (v.pids[i].uid === stat.uid){
@@ -143,6 +153,6 @@ async function mainLoop()
 }
 
 getStats();
-setInterval(mainLoop, 2000);
+setInterval(mainLoop, 1000);
 setInterval(pingIt, 5000);
 
