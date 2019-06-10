@@ -1,14 +1,12 @@
 // for dev:
 // const Vue = require('vue/dist/vue.js');
 const Vue = require('vue/dist/vue.min.js');
-var ping = require('net-ping');
+var ping = require('ping');
 const Stat = require("./stat.js");
 var Multimap = require('multimap');
 const uuidv1 = require('uuid/v1');
 var wstat = require('windows-netstat');
 var _ = require('lodash');
-
-var session = ping.createSession ({timeout:1000});
 
 var v = new Vue({
     el: '#app',
@@ -123,14 +121,9 @@ function pingIt() {
         if (! ipSet.has(pid.ip)){
             if (pid.state !== null && (pid.state === 'ESTABLISHED' || pid.state.indexOf('WAIT') > 0)){
                 ipSet.add(pid.ip);
-                session.pingHost (pid.ip, function (error, target, sent, rcvd) {
-                    if (error){
-                        setPingResult(target, null);
-                    }
-                    else{
-                        var ms = rcvd - sent;
-                        setPingResult(target, ms);
-                    }
+                ping.promise.probe(pid.ip, {timeout: 1, numeric: true}).then(function (result) {
+                    if (result.avg > 0)
+                        setPingResult(result.host, result.avg);
                 });
             }
         }
