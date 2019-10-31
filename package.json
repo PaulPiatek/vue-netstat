@@ -24,7 +24,7 @@
     "electron-rebuild": "^1.8.5"
   },
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "multimap": "^1.0.2",
     "ping": "^0.2.2",
     "uuid": "^3.3.2",
