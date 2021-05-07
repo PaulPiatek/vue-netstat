@@ -4,7 +4,7 @@ const Vue = require('vue/dist/vue.min.js');
 var ping = require('ping');
 const Stat = require("./stat.js");
 var Multimap = require('multimap');
-const uuidv1 = require('uuid/v1');
+const { v4: uuidv4 } = require('uuid');
 var wstat = require('windows-netstat');
 var _ = require('lodash');
 
@@ -60,7 +60,7 @@ async function getStats()
         stat.setLocalPort(data.localPort);
         stat.setState(data.state);
         stat.setUpdateTime(new Date().getTime());
-        stat.setUid(uuidv1());
+        stat.setUid(uuidv4());
         stat.setPidStatus('new');
         if (v.stats.has(data.pid))   
         {
