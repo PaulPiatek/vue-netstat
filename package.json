@@ -30,7 +30,7 @@
     "ping": "^0.4.1",
     "uuid": "^8.3.2",
     "vue": "^2.6.13",
-    "windows-netstat": "^1.0.1"
+    "windows-netstat": "^1.0.2"
   },
   "build": {
     "appId": "vue.netstat",
