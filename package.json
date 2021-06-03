@@ -1,6 +1,6 @@
 {
   "name": "vue-netstat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A netstat viewer build with Electron and Vue",
   "main": "main.js",
   "scripts": {
