@@ -19,16 +19,17 @@
   "author": "Paul Piatek",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^12.0.7",
-    "electron-builder": "^22.11.1",
-    "electron-rebuild": "^2.3.5"
+    "electron": "^13.1.0",
+    "electron-builder": "^22.11.5",
+    "electron-rebuild": "^2.3.5",
+    "node-abi": "^2.30.0"
   },
   "dependencies": {
     "lodash": "^4.17.21",
     "multimap": "^1.1.0",
     "ping": "^0.4.1",
     "uuid": "^8.3.2",
-    "vue": "^2.6.12",
+    "vue": "^2.6.13",
     "windows-netstat": "^1.0.1"
   },
   "build": {
