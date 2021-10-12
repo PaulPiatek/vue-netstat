@@ -19,7 +19,7 @@
   "author": "Paul Piatek",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^13.1.4",
+    "electron": "^13.3.0",
     "electron-builder": "^22.11.7",
     "electron-rebuild": "^2.3.5",
     "node-abi": "^2.30.0"
